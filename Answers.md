@@ -25,13 +25,13 @@
 3.  What is the difference between Application state and Component state? When would be a good time to use  
     one over the other?
 
-    Application state is global and is contained within the redux store. Component state exists only at the component level.
+        Application state is global and is contained within the redux store. Component state exists only at the component level.
 
-    Application state should be used if one or more components depend on having access to the glocal redux state.
+        Application state should be used if one or more components depend on having access to the glocal redux state.
 
-    Component state should be used if no other component in your application requires access to it. An example would be
-    form field data. Other components may update depending on how that form data is computed by the actions and reducers,
-    but they won't depend on the data being typed into those fields at the time the user is filling out the form.
+        Component state should be used if no other component in your application requires access to it. An example would be
+        form field data. Other components may update depending on how that form data is computed by the actions and reducers,
+        but they won't depend on the data being typed into those fields at the time the user is filling out the form.
 
 4.  What is middleware?
 
