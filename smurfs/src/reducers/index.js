@@ -9,6 +9,9 @@ import {
   ADD_SMURF_START,
   ADD_SMURF_SUCCESS,
   ADD_SMURF_FAILURE,
+  EDIT_SMURF_START,
+  EDIT_SMURF_SUCCESS,
+  EDIT_SMURF_FAILURE,
   DELETE_SMURF_START,
   DELETE_SMURF_SUCCESS,
   DELETE_SMURF_FAILURE
@@ -18,6 +21,7 @@ const initialState = {
   smurfs: [],
   fetchingSmurfs: false,
   addingSmurf: false,
+  editingSmurf: false,
   updatingSmurf: false,
   deletingSmurf: false,
   error: null
@@ -70,6 +74,25 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         addingSmurf: false,
+        error: action.payload
+      };
+    case EDIT_SMURF_START:
+      return {
+        ...state,
+        editingSmurf: true,
+        error: null
+      };
+    case EDIT_SMURF_SUCCESS:
+      return {
+        ...state,
+        smurfs: [...state.smurfs, action.payload],
+        editingSmurf: false,
+        error: null
+      };
+    case EDIT_SMURF_FAILURE:
+      return {
+        ...state,
+        editingSmurf: false,
         error: action.payload
       };
     case DELETE_SMURF_START:

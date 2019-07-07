@@ -47,8 +47,7 @@ class SmurfForm extends React.Component {
     e.preventDefault();
     this.props
       .addSmurf(this.state.smurf)
-      .then(() => this.props.history.push("/smurfs"))
-      .catch(err => {});
+      .then(res => (res ? this.props.history.push("/smurfs") : null));
   };
 
   render() {

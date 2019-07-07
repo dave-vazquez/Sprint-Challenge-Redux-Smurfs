@@ -13,6 +13,10 @@ export const ADD_SMURF_START = "ADD_SMURF_START";
 export const ADD_SMURF_SUCCESS = "ADD_SMURF_SUCCESS";
 export const ADD_SMURF_FAILURE = "ADD_SMURF_FAILURE";
 
+export const EDIT_SMURF_START = "EDIT_SMURF_START";
+export const EDIT_SMURF_SUCCESS = "EDIT_SMURF_SUCCESS";
+export const EDIT_SMURF_FAILURE = "EDIT_SMURF_FAILURE";
+
 export const DELETE_SMURF_START = "DELETE_SMURF_START";
 export const DELETE_SMURF_SUCCESS = "DELETE_SMURF_SUCCESS";
 export const DELETE_SMURF_FAILURE = "DELETE_SMURF_FAILURE";
@@ -43,19 +47,31 @@ export const getSmurfs = () => dispatch => {
 };
 
 export const addSmurf = smurf => dispatch => {
-  return new Promise((resolve, reject) => {
-    dispatch({ type: ADD_SMURF_START });
-    axios
-      .post(`${localHost}/smurfs`, smurf)
-      .then(res => {
-        dispatch({ type: ADD_SMURF_SUCCESS, payload: res.data });
-        resolve();
-      })
-      .catch(err => {
-        dispatch({ type: ADD_SMURF_FAILURE, payload: err.response.data.Error });
-        reject();
-      });
-  });
+  dispatch({ type: ADD_SMURF_START });
+  return axios
+    .post(`${localHost}/smurfs`, smurf)
+    .then(res => {
+      dispatch({ type: ADD_SMURF_SUCCESS, payload: res.data });
+      return true;
+    })
+    .catch(err => {
+      dispatch({ type: ADD_SMURF_FAILURE, payload: err.response.data.Error });
+      return false;
+    });
+};
+
+export const editSmurf = smurf => dispatch => {
+  dispatch({ type: EDIT_SMURF_START });
+  return axios
+    .put(`${localHost}/smurfs/${smurf.id}`, smurf)
+    .then(res => {
+      dispatch({ type: EDIT_SMURF_SUCCESS, payload: res.data });
+      return true;
+    })
+    .catch(err => {
+      dispatch({ type: EDIT_SMURF_FAILURE, payload: err.response.data.Error });
+      return false;
+    });
 };
 
 export const deleteSmurf = smurfID => dispatch => {

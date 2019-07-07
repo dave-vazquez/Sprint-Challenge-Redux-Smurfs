@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Route, NavLink } from "react-router-dom";
 import styled from "styled-components";
+import Smurf from "./Smurf";
 import SmurfList from "./SmurfList";
 import SmurfForm from "./SmurfForm";
 
@@ -64,11 +66,37 @@ class App extends Component {
           path="/"
           render={() => <h1>Welcome to the Smurf Village!</h1>}
         />
-        <Route path="/smurfs" component={SmurfList} />
+        <Route
+          path="/smurfs"
+          render={props => <SmurfList {...props} smurfs={this.props.smurfs} />}
+        />
         <Route path="/add-smurf" component={SmurfForm} />
+        <Route
+          path="/edit/:id"
+          render={props => {
+            const id = props.match.params.id;
+            return (
+              <Smurf
+                {...props}
+                activeSmurf={this.props.smurfs.find(
+                  smurf => `${smurf.id}` === id
+                )}
+              />
+            );
+          }}
+        />
       </AppContainer>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    smurfs: state.smurfs
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {}
+)(App);
